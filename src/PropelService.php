@@ -40,12 +40,7 @@ class PropelService extends \FDT2k\Noctis\Core\Service\NoctisService
     $manager->setName($noctisConfig->get('database'));
     $serviceContainer->setConnectionManager($noctisConfig->get('database'), $manager);
     $serviceContainer->setDefaultDatasource($noctisConfig->get('database'));
-
-
     // loading propel
-
-
-
     $defaultLogger = new Logger('defaultLogger');
     $defaultLogger->pushHandler(new StreamHandler(ICE_ROOT.'/var/log/propel.log', Logger::DEBUG));
 
