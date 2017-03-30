@@ -1,5 +1,5 @@
 {
-    "name": "gka/noctis-propel-service",
+    "name": "fdt2k/noctis-propel-service",
     "version":"1.0",
     "description": "Propel model layer for Noctis framework",
     "license": "BSD-3-Clause-Attribution",
