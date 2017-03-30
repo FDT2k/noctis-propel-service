@@ -2,7 +2,7 @@
     "name": "fdt2k/noctis-propel-service",
     "version":"1.0",
     "description": "Propel model layer for Noctis framework",
-    "license": "BSD-3-Clause-Attribution",
+    "license": "MIT",
     "authors": [
         {
             "name": "Fabien Di Tore",
@@ -22,40 +22,5 @@
         "fdt2k/noctis-framework":"*",
         "propel/propel": "~2.0@dev",
         "monolog/monolog": "1.22"
-    },
-    "repositories": [
-      {
-          "type": "vcs",
-          "url": "https://git.geekagency.ch/FDT2k/noctis-xtpl.git"
-      },
-      {
-          "type": "vcs",
-          "url": "https://git.geekagency.ch/FDT2k/config-manager.git"
-      },
-      {
-          "type": "vcs",
-          "url": "https://git.geekagency.ch/FDT2k/noctis-framework.git"
-      },
-      {
-          "type": "vcs",
-          "url": "https://git.geekagency.ch/FDT2k/phplibs.git"
-      },
-      {
-          "type": "vcs",
-          "url": "https://git.geekagency.ch/FDT2k/noctis-model.git"
-      },
-
-      {
-          "type": "vcs",
-          "url": "https://git.geekagency.ch/FDT2k/php-database-lib.git"
-      },
-      {
-          "type": "vcs",
-          "url": "https://git.geekagency.ch/FDT2k/noctis-mailer.git"
-      },
-      {
-          "type": "vcs",
-          "url": "https://git.geekagency.ch/FDT2k/php-root-object.git"
-      }
-      ]
+    }
 }
