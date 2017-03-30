@@ -11,7 +11,8 @@ class PropelService extends \FDT2k\Noctis\Core\Service\NoctisService
     //initialize propel  (replace config generator)
     $serviceContainer = \Propel\Runtime\Propel::getServiceContainer();
     $serviceContainer->checkVersion('2.0.0-dev');
-    $serviceContainer->setAdapterClass($noctisConfig->get('database'), 'mysql');
+
+    $serviceContainer->setAdapterClass($noctisConfig->get('connection_name'), 'mysql');
     $manager = new \Propel\Runtime\Connection\ConnectionManagerSingle();
     $manager->setConfiguration(array (
       'classname' => 'Propel\\Runtime\\Connection\\DebugPDO',
@@ -37,9 +38,9 @@ class PropelService extends \FDT2k\Noctis\Core\Service\NoctisService
         1 => 'vendor',
       ),
     ));
-    $manager->setName($noctisConfig->get('database'));
-    $serviceContainer->setConnectionManager($noctisConfig->get('database'), $manager);
-    $serviceContainer->setDefaultDatasource($noctisConfig->get('database'));
+    $manager->setName($noctisConfig->get('connection_name'));
+    $serviceContainer->setConnectionManager($noctisConfig->get('connection_name'), $manager);
+    $serviceContainer->setDefaultDatasource($noctisConfig->get('connection_name'));
     // loading propel
     $defaultLogger = new Logger('defaultLogger');
     $defaultLogger->pushHandler(new StreamHandler(ICE_ROOT.'/var/log/propel.log', Logger::DEBUG));
