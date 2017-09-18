@@ -5,20 +5,23 @@ use Monolog\Handler\StreamHandler;
 use FDT2k\Noctis\Core\Env as Env;
 class PropelService extends \FDT2k\Noctis\Core\Service\NoctisService
 {
-  function runAfterFrameworkPreInit(){
-    $noctisConfig = Env::getConfig('database');
 
+  function getServiceContainer(){
     //initialize propel  (replace config generator)
     $serviceContainer = \Propel\Runtime\Propel::getServiceContainer();
     $serviceContainer->checkVersion('2.0.0-dev');
+    return $serviceContainer;
+  }
+  function createManager($config){
 
-    $serviceContainer->setAdapterClass($noctisConfig->get('connection_name'), 'mysql');
+    $serviceContainer = $this->getServiceContainer();
+    $serviceContainer->setAdapterClass($config->get('connection_name'), 'mysql');
     $manager = new \Propel\Runtime\Connection\ConnectionManagerSingle();
     $manager->setConfiguration(array (
       'classname' => 'Propel\\Runtime\\Connection\\DebugPDO',
-      'dsn' => 'mysql:host='.$noctisConfig->get('host').';dbname='.$noctisConfig->get('database'),
-      'user' => $noctisConfig->get('username'),
-      'password' => $noctisConfig->get('password'),
+      'dsn' => 'mysql:host='.$config->get('host').';dbname='.$config->get('database'),
+      'user' => $config->get('username'),
+      'password' => $config->get('password'),
       'attributes' =>
       array (
         'ATTR_EMULATE_PREPARES' => false,
@@ -38,13 +41,26 @@ class PropelService extends \FDT2k\Noctis\Core\Service\NoctisService
         1 => 'vendor',
       ),
     ));
-    $manager->setName($noctisConfig->get('connection_name'));
-    $serviceContainer->setConnectionManager($noctisConfig->get('connection_name'), $manager);
-    $serviceContainer->setDefaultDatasource($noctisConfig->get('connection_name'));
-    // loading propel
+    $manager->setName($config->get('connection_name'));
+    $serviceContainer->setConnectionManager($config->get('connection_name'), $manager);
+    $serviceContainer->setDefaultDatasource($config->get('connection_name'));
+  }
+  function initLogger(){
+    // set up logging service
+    $serviceContainer = $this->getServiceContainer();
     $defaultLogger = new Logger('defaultLogger');
     $defaultLogger->pushHandler(new StreamHandler(ICE_ROOT.'/var/log/propel.log', Logger::DEBUG));
 
     $serviceContainer->setLogger('defaultLogger', $defaultLogger);
+  }
+
+  function runAfterFrameworkPreInit(){
+    $noctisConfig = Env::getConfig('database');
+    $cnx = $noctisConfig->get('connections');
+    foreach($cnx as $c){
+
+
+      $this->createManager(Env::getConfig($c));
+    }
   }
 }
