@@ -45,6 +45,7 @@ class PropelService extends \FDT2k\Noctis\Core\Service\NoctisService
     $serviceContainer->setConnectionManager($config->get('connection_name'), $manager);
     $serviceContainer->setDefaultDatasource($config->get('connection_name'));
   }
+
   function initLogger(){
     // set up logging service
     $serviceContainer = $this->getServiceContainer();
@@ -62,5 +63,7 @@ class PropelService extends \FDT2k\Noctis\Core\Service\NoctisService
 
       $this->createManager(Env::getConfig($c));
     }
+
+    $this->initLogger();
   }
 }
