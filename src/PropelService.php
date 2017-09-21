@@ -17,8 +17,14 @@ class PropelService extends \FDT2k\Noctis\Core\Service\NoctisService
     $serviceContainer = $this->getServiceContainer();
     $serviceContainer->setAdapterClass($config->get('connection_name'), 'mysql');
     $manager = new \Propel\Runtime\Connection\ConnectionManagerSingle();
+    if($config->get('propel_debug')){
+      $classname=  "DebugPDO";
+    }else{
+      $classname= "PropelPDO";
+    }
+
     $manager->setConfiguration(array (
-      'classname' => 'Propel\\Runtime\\Connection\\DebugPDO',
+      'classname' => 'Propel\\Runtime\\Connection\\'.$classname,
       'dsn' => 'mysql:host='.$config->get('host').';dbname='.$config->get('database'),
       'user' => $config->get('username'),
       'password' => $config->get('password'),
@@ -63,7 +69,8 @@ class PropelService extends \FDT2k\Noctis\Core\Service\NoctisService
 
       $this->createManager(Env::getConfig($c));
     }
-
-    $this->initLogger();
+    if($noctisConfig->get('propel_logger')){
+      $this->initLogger();
+    }
   }
 }
