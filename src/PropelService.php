@@ -13,9 +13,11 @@ class PropelService extends \FDT2k\Noctis\Core\Service\NoctisService
     $serviceContainer->checkVersion('2.0.0-dev');
     return $serviceContainer;
   }
+
   function createManager($c){
     $this->createPropelManager($c->get('connection_name'),$c->get('host'),$c->get('database'),$c->get('username'),$c->get('password'),$c->get('propel_debug'));
   }
+
   function createPropelManager($connection_name,$host,$database,$username,$password,$debug=false){
     $serviceContainer = $this->getServiceContainer();
     $serviceContainer->setAdapterClass($connection_name, 'mysql');
