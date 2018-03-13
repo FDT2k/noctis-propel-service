@@ -1,3 +1,5 @@
 #!/bin/bash
+DIRNAME=$(dirname $0)
+ROOT=$DIRNAME/../../../../
 
-src/vendor/propel/propel/bin/propel diff --config-dir src/app/config/dev --schema-dir src/app/config/dev  -v
+$ROOT/vendor/propel/propel/bin/propel diff --config-dir $ROOT/app/config/dev --schema-dir $ROOT/app/config/dev  -v
